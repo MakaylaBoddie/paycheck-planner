@@ -3,11 +3,12 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const supabase = createClient('https://zlwkaxsajkopauvhwgsm.supabase.co', 'sb_publishable_9IfHjvS2rXP47gE1JAF2Ww_RxU9H20Y', {auth:{experimental:{passkey:true}}});
 const app = document.querySelector('#app');
 const anchor = new Date(2026, 7, 21);
+const currentIndex=Math.round((new Date().setHours(0,0,0,0)-anchor.getTime())/12096e5);
 const seedBills = [
   ['Rent','A','fixed',717.5],['Internet','A','fixed',35],['Car Insurance','A','variable',null],['CareCredit','A','variable',null],['PayPal Credit Card','A','variable',null],
   ['FPL','B','variable',null],['Phone','B','variable',null],['Water','B','variable',null],['Car Payment','B','editable',null],['Navy Federal Credit Card','B','variable',null],['Capital One Credit Card','B','variable',null]
 ];
-let state={session:null,index:0,page:'paycheck',data:null,month:null,calendar:null,monthly:[],settings:[],editing:null};
+let state={session:null,index:currentIndex,page:'calendar',data:null,month:null,calendar:{y:new Date().getFullYear(),m:new Date().getMonth()},monthly:[],settings:[],editing:null};
 const fmt=v=>v==null?'—':new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(v);
 const val=v=>{const x=Number(String(v).replace(/[^0-9.-]/g,''));return Number.isFinite(x)&&x>=0?Math.round(x*100)/100:null};
 const date=d=>new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric'}).format(new Date(`${d}T12:00:00`));
