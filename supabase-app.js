@@ -10,7 +10,7 @@ const key=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${Str
 const pretty=d=>new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric'}).format(new Date(`${d}T12:00:00`));
 const monthName=(y,m)=>new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric'}).format(new Date(y,m,1));
 const add=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
-const indexOf=d=>Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,9,29))/1209600000);
+function indexOf(d){return Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,9,29))/1209600000)}
 const period=i=>{const start=add(anchor,i*14);return{index:i,date:key(start),start,end:add(start,14)}};
 
 function dueDate(bill,start,end){const day=Number.parseInt(bill.due_date,10);if(!day)return null;let d=new Date(start.getFullYear(),start.getMonth(),Math.min(day,new Date(start.getFullYear(),start.getMonth()+1,0).getDate()));if(d<start)d=new Date(start.getFullYear(),start.getMonth()+1,Math.min(day,new Date(start.getFullYear(),start.getMonth()+2,0).getDate()));return d<end?d:null}
